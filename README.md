@@ -69,3 +69,4 @@ Opening the project `RProject_acLHS_2D.Rproj` with Rstudio. Then open all the sc
 MIT License
 
 Copyright (c) 2022 Van Huong Le, Rodrigo Vargas
+ 
