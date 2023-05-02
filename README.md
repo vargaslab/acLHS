@@ -1,4 +1,4 @@
-# An autocorrelated conditioned Latin hypercube method for data-driven spatio-temporal sampling and predictions
+# Autocorrelated conditioned Latin hypercube method 
 
 by Van Huong Le<sup>1</sup>, Rodrigo Vargas<sup>1</sup>
 
@@ -14,7 +14,7 @@ Department of Plant and Soil Sciences, University of Delaware, Newark, DE, 19716
 
 ## Description
 
-This repository contains the source code to perform different sampling methods:Fixed sampling, conditioned Latin Hypercube Sampling (cLHS), and autocorrelated conditioned Latin Hypercube Sampling (acLHS). The predictions are then based on the samples using a Bernstein copula-based stochastic cosimulation (BCSCS) method. Here are two case studies using data of soil CO$_{2}$ efflux (i.e., the CO$_{2}$ efflux from soils to the atmosphere known as soil respiration) that are relevant for carbon cycle science. The first case study represents data from a time series (1D approach), and the second case represents spatial data (2D approach) across the conterminous United States (CONUS).
+This repository contains the source code for different sampling methods: Fixed sampling, conditioned Latin Hypercube Sampling (cLHS), and autocorrelated conditioned Latin Hypercube Sampling (acLHS). Predictions are based using a Bernstein copula-based stochastic cosimulation (BCSCS) method. We provide two case studeies: first using a time series and the second for spatial applications.
 
 ## Content
 
