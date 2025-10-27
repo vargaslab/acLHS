@@ -1,0 +1,11 @@
+bibentry(
+  "Article",
+  title = "An Autocorrelated Conditioned Latin Hypercube Sampling Method for Temporal or Spatial Sampling and Predictions",
+  author = "Van Huong Le and Rodrigo Vargas",
+  year = 2024,
+  journal = "Computers & Geosciences",
+  volume = 184,
+  issn = "0098-3004",
+  pages = 105539,
+  doi = "10.1016/j.cageo.2024.105539"
+)

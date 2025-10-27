@@ -1,72 +1,14 @@
-# Autocorrelated conditioned Latin hypercube method 
+# acLHS
 
-by Van Huong Le<sup>1</sup>, Rodrigo Vargas<sup>1</sup>
+`aclhs` ([Huong et al., 20xx](https://github.com/vargaslab/acLHS)) implements the autocorrelated conditioned Latin Hypercube Sampling algorithm for 1 dimensional (i.e., time-series) and 2 dimensional (i.e., spatial) data with independent and dependent variable values.
 
-<sup>1</sup>Department of Plant and Soil Sciences, University of Delaware, Newark, DE, 19716, USA
+The latest stable version and development of `aclhs` is available at https://github.com/vargaslab/acLHS.
 
-Corresponding author affiliation and e-mail:
+## Citation
 
-Rodrigo Vargas
+If you use `aclhs` for any published work, please:
 
-Department of Plant and Soil Sciences, University of Delaware, Newark, DE, 19716, USA
+1. Cite [Huong et al. (2024)](https://www.sciencedirect.com/science/article/pii/S0098300424000220) in the references.
+2. Add a URL in the footnote with the link to the `aclhs` package GitHub: https://github.com/vargaslab/acLHS.
 
-[rvargas\@udel.edu](mailto:rvargas@udel.edu)
-
-## Description
-
-This repository contains the source code for different sampling methods: Fixed sampling, conditioned Latin Hypercube Sampling (cLHS), and autocorrelated conditioned Latin Hypercube Sampling (acLHS). Predictions are based using a Bernstein copula-based stochastic cosimulation (BCSCS) method. We provide two case studeies: first using a time series and the second for spatial applications.
-
-## Content
-
-##### RProject_acLHS_1D: The case study represents data from a time series
-
--   Data: this folder contains the data
--   Functions: this folder contains the useful functions
--   Scripts: this folder contains the scripts
--   Results: this folder contains the results
--   RProject_acLHS_1D.Rproj: This file is the R Project
-
-##### RProject_acLHS_2D: The case study represents data from spatial data
-
--   Data: this folder contains the data
--   Functions: this folder contains the useful functions
--   Scripts: this folder contains the scripts
--   Results: this folder contains the results
--   RProject_acLHS_2D.Rproj: This file is the R Project
-
-## install
-
-The code has been tested using packages of:
-
--   R version 4.2.1
-
--   RStudio 2022.07.1
-
-## How to run the code?
-
-#### RProject_acLHS_1D
-
-Opening the project `RProject_acLHS_1D.Rproj` with Rstudio. Then open all the scripts in the "scripts" folder. The scripts are run in the following order: 0_Getting_Started.R, 1_Exploratory_data_analysis.R, 2_Variogram_analysis.R, 3_Sampling_Design.R, 4_Simulations.R.
-
--   0_Getting_Started.R: this script is for installing and loading R packages, and also loading functions from the functions folder.
--   1_Exploratory_data_analysis.R: this script is for exploring and calculating univariate statistical properties and dependency relationships between variables.
--   2_Variogram_analysis.R: this script is to explore the temporal or spatial distribution of the variable of interest and calculate its autocorrelation function.
--   3_Sampling_Design.R: this script is for applying sampling methods based on the data.
--   4_Simulations.R: this script is to model the characteristic functions of the variables and perform the simulation.
-
-#### RProject_acLHS_2D
-
-Opening the project `RProject_acLHS_2D.Rproj` with Rstudio. Then open all the scripts in the "scripts" folder. The scripts are run in the following order: 0_Getting_Started.R, 1_Exploratory_data_analysis.R, 2_Variogram_analysis.R, 3_Sampling_Design.R, 4_Simulations.R.
-
--   0_Getting_Started.R: this script is for installing and loading R packages, and also loading functions from the functions folder.
--   1_Exploratory_data_analysis.R: this script is for exploring and calculating univariate statistical properties and dependency relationships between variables.
--   2_Variogram_analysis.R: this script is to explore the temporal or spatial distribution of the variable of interest and calculate its autocorrelation function.
--   3_Sampling_Design.R: this script is for applying sampling methods based on the data.
--   4_Simulations.R: this script is to model the characteristic functions of the variables and perform the simulation.
-
-## License
-
-MIT License
-
-Copyright (c) 2022 Van Huong Le, Rodrigo Vargas
- 
+Le V. H., Vargas R. (2024). "An Autocorrelated Conditioned Latin Hypercube Sampling Method for Temporal or Spatial Sampling and Predictions." _Computers & Geosciences_, 184, 105539. <https://doi:10.1016/j.cageo.2024.105539>.
