@@ -14,10 +14,8 @@ A data frame with 903 rows and 4 columns:
 \item{rTemp}{The temperature}
 \item{rRS}{The carbon dioxide efflux}
 }
+\doi{10.1111/gcb.15666}
 }
-}
-\source{
-\url{https://doi.org/10.1111/gcb.15666}
 }
 \usage{
 ex_data_2D

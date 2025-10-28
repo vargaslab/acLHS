@@ -13,10 +13,8 @@ A data frame with 365 rows and 3 columns:
 \item{Temp}{The temperature}
 \item{CO2}{The carbon dioxide efflux}
 }
+\doi{10.1007/s11104-017-3506-4}
 }
-}
-\source{
-\url{https://doi.org/10.1007/s11104-017-3506-4}
 }
 \usage{
 ex_data_1D

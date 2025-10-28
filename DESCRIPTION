@@ -10,10 +10,11 @@ Authors@R: c(
            comment = c(ORCID = "0009-0004-1538-5035"))
   )
 Description: Implementation of the autocorrelated conditioned Latin
-    Hypercube Sampling algorithms for 1D (time-series) and 2D (spatial)
-    data. A provided, properly formatted dataframe will help yield
-    subsample indices that maintain statiscal and correlative features of
-    the original data.
+    Hypercube Sampling (acLHS) algorithm for 1D (time-series) and 2D (spatial)
+    data. The acLHS algorithm is an extension of the conditioned Latin Hypercube 
+    Sampling (cLHS) algorithm that allows samples to maintain correlative 
+    features as well as statistical features. Only a properly formatted 
+    dataframe needs to be provided to yield subsample indices from the package.
 License: MIT + file LICENSE
 URL: https://doi.org/10.1016/j.cageo.2024.105539, https://github.com/vargaslab/acLHS
 BugReports: https://github.com/vargaslab/acLHS/issues
