@@ -10,8 +10,7 @@ aclhs(
   weights,
   iter = 1000,
   vario_params = aclhs.vario_params(),
-  export_file = NULL,
-  seed = NULL
+  export_file = NULL
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ aclhs(
 \item{vario_params}{A list of parameters to use when computing Variograms}
 
 \item{export_file}{The name of a CSV to export subsampled rows to}
-
-\item{seed}{A seed to use for randomization in the optimization process}
 }
 \value{
 A numeric vector of subsample indices of the original data
@@ -36,7 +33,10 @@ A numeric vector of subsample indices of the original data
 This function extracts a desired number of subsample indices from a dataframe
 using the acLHS algorithm. The function works for either 1D or 2D data, where
 it is assumed the last two columns of data are the independent and dependent
-variables, respectively.
+variables, respectively. Determining the optimal subsamples is done using
+the DEoptim package, which introduces elements of nondeterminism through
+randomization. If you desire consistent results, ensure to set a seed before
+running the function.
 }
 \examples{
 ## acLHS sampling example

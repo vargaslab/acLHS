@@ -2,7 +2,7 @@
 % Please edit documentation in R/aclhs.R
 \name{aclhs.get_correlations}
 \alias{aclhs.get_correlations}
-\title{Print out different correlation values.}
+\title{Computes correlations between the original and aclhs-sampled data.}
 \usage{
 aclhs.get_correlations(df, aclhs_samples)
 }
@@ -11,9 +11,13 @@ aclhs.get_correlations(df, aclhs_samples)
 
 \item{aclhs_samples}{The acLHS-derived sample indices}
 }
+\value{
+A dataframe with the original and aclhs-sampled correlation values
+}
 \description{
-Prints out pearson, spearman, and kendall correlations
-for the given dataset and it's acLHS subsampled version.
+Computes the Pearson, Spearman, and Kendall correlations of the independent
+and dependent variable of the original and aclhs-sampled data. Correlation
+values are rounded to the third decimal place.
 }
 \examples{
 ## Get the data of interest and get the acLHS sample indices
@@ -21,6 +25,6 @@ data(ex_data_2D)
 input2D <- ex_data_2D
 aclhs_sam <- aclhs(df=input2D, num_samples=50, weights=c(1,1,1), iter=100)
 
-## Print out correlations
-aclhs.get_correlations(df=input2D, aclhs_samples=aclhs_sam)
+## Compute the correlations
+correlations <- aclhs.get_correlations(df=input2D, aclhs_samples=aclhs_sam)
 }

@@ -16,7 +16,7 @@ aclhs.vario_params(num_lags = 8, dir = 0, tol = 90, min_pairs = 1)
 \item{min_pairs}{The minimum number of pairs}
 }
 \value{
-A list of the set parameters
+A list of the set Variogram parameters
 }
 \description{
 Sets specific parameters for computing Variograms within the acLHS 1D or 2D

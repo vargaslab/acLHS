@@ -15,6 +15,9 @@ aclhs.plot_univariate_pdf(df, aclhs_samples, col, plot_params)
 
 \item{plot_params}{The plotting parameters to use}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Plots the univariate PDF of acLHS-sampled points over the original
 univariate PDF data. The PDF can be plotted for either the dependent

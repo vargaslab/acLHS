@@ -15,6 +15,9 @@ aclhs.plot_variogram_comparison(df, aclhs_samples, vario_params, plot_params)
 
 \item{plot_params}{The plotting parameters to use}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Plots the acLHS-sampled Variogram against the Variogram of
 the original data. A best-fit curve of the original Variogram

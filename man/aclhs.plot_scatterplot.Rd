@@ -13,6 +13,9 @@ aclhs.plot_scatterplot(df, aclhs_samples, plot_params)
 
 \item{plot_params}{The plotting parameters to use}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Plots the acLHS-sampled points of independent and dependent
 variables of the data as a scatterplot over the original points.

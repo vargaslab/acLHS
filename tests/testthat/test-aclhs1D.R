@@ -4,10 +4,10 @@ test_that("aclhs1D sampling test", {
   w <- c(0.3,100,1)
   it <- 100
   vp <- aclhs.vario_params(8, 0, 90, 1)
-  sd <- 1234
-
+  
+  set.seed(1234)
   function_answer <- aclhs(df=df, num_samples=ns, weights=w, iter=it,
-                             vario_params=vp, seed=sd)
+                             vario_params=vp)
 
   temp_arr <- c(44,82,42,66,69,27,68,32,37,84,324,87,73,70,307,46,25,94,
                 266,261,265,259,258,336,341,118,121,145,321,151,275,349,

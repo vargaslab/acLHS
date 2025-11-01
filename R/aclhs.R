@@ -9,7 +9,7 @@
 #' @param dir The direction
 #' @param tol The tolerance
 #' @param min_pairs The minimum number of pairs
-#' @return A list of the set parameters
+#' @return A list of the set Variogram parameters
 #' @examples
 #' ## Store the parameters into a variable
 #' v_params <- aclhs.vario_params(num_lags=10, dir=0, tol=90, min_pairs=1)
@@ -25,37 +25,50 @@ aclhs.vario_params <- function(num_lags = 8, dir = 0, tol = 90, min_pairs = 1) {
                min_pairs = min_pairs))
 }
 
-#' Print out different correlation values.
+#' Computes correlations between the original and aclhs-sampled data.
 #'
-#' Prints out pearson, spearman, and kendall correlations
-#' for the given dataset and it's acLHS subsampled version.
+#' Computes the Pearson, Spearman, and Kendall correlations of the independent
+#' and dependent variable of the original and aclhs-sampled data. Correlation 
+#' values are rounded to the third decimal place.
 #'
 #' @param df The original data in dataframe format
 #' @param aclhs_samples The acLHS-derived sample indices
+#' @return A dataframe with the original and aclhs-sampled correlation values
 #' @examples
 #' ## Get the data of interest and get the acLHS sample indices
 #' data(ex_data_2D)
 #' input2D <- ex_data_2D
 #' aclhs_sam <- aclhs(df=input2D, num_samples=50, weights=c(1,1,1), iter=100)
 #'
-#' ## Print out correlations
-#' aclhs.get_correlations(df=input2D, aclhs_samples=aclhs_sam)
+#' ## Compute the correlations
+#' correlations <- aclhs.get_correlations(df=input2D, aclhs_samples=aclhs_sam)
 #' @export
 aclhs.get_correlations <- function(df, aclhs_samples) {
   # Subsample the original dataset
   df_sub <- df[aclhs_samples,]
   ncols <- ncol(df)
+  
+  # Compute the correlation values of the original data
+  pearson_org <- round(stats::cor(df[ncols-1], df[ncols], method="pearson"), 3)
+  spearman_org <- round(stats::cor(df[ncols-1], df[ncols], method="spearman"), 3)
+  kendall_org <- round(stats::cor(df[ncols-1], df[ncols], method="kendall"), 3)
+  corrs_org <- c(pearson_org, spearman_org, kendall_org)
 
-  cat("Original Data Correlations\n")
-  cat("Pearson:", round(stats::cor(df[ncols-1], df[ncols], method="pearson"), 3), "\n")
-  cat("Spearman:", round(stats::cor(df[ncols-1], df[ncols], method="spearman"), 3), "\n")
-  cat("Kendall:", round(stats::cor(df[ncols-1], df[ncols], method="kendall"), 3), "\n")
-  cat("\n")
-
-  cat("Subsampled Data Correlations\n")
-  cat("Pearson:", round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="pearson"), 3), "\n")
-  cat("Spearman:", round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="spearman"), 3), "\n")
-  cat("Kendall:", round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="kendall"), 3), "\n")
+  # Compute the correlation values of the subsampled data
+  pearson_aclhs <- round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="pearson"), 3)
+  spearman_aclhs <- round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="spearman"), 3)
+  kendall_aclhs <- round(stats::cor(df_sub[ncols-1], df_sub[ncols], method="kendall"), 3)
+  corrs_aclhs <- c(pearson_aclhs, spearman_aclhs, kendall_aclhs)
+  
+  # Configure correlations into a dataframe and return
+  corrs <- data.frame(
+    original = corrs_org,
+    aclhs = corrs_aclhs
+  )
+  row_names <- c("Pearson", "Spearman", "Kendall")
+  rownames(corrs) <- row_names
+  
+  return (corrs)
 }
 
 #' Computes a score from three objective functions.
@@ -143,7 +156,10 @@ score_samples <- function(var_samples, df, num_samples, quantile_ind, corrs,
 #' This function extracts a desired number of subsample indices from a dataframe
 #' using the acLHS algorithm. The function works for either 1D or 2D data, where
 #' it is assumed the last two columns of data are the independent and dependent
-#' variables, respectively.
+#' variables, respectively. Determining the optimal subsamples is done using
+#' the DEoptim package, which introduces elements of nondeterminism through
+#' randomization. If you desire consistent results, ensure to set a seed before
+#' running the function.
 #'
 #' @param df A dataframe with three columns of data
 #' @param num_samples The number of desired subsamples
@@ -151,7 +167,6 @@ score_samples <- function(var_samples, df, num_samples, quantile_ind, corrs,
 #' @param iter The max number of iterations to perform to find optimized indices
 #' @param vario_params A list of parameters to use when computing Variograms
 #' @param export_file The name of a CSV to export subsampled rows to
-#' @param seed A seed to use for randomization in the optimization process
 #' @return A numeric vector of subsample indices of the original data
 #' @examples
 #' ## acLHS sampling example
@@ -174,16 +189,11 @@ score_samples <- function(var_samples, df, num_samples, quantile_ind, corrs,
 #' @export
 aclhs <- function(df, num_samples, weights, iter = 1000,
                   vario_params = aclhs.vario_params(),
-                  export_file = NULL, seed = NULL) {
+                  export_file = NULL) {
   # Validate provided number of columns in dataframe is correct
   num_cols <- ncol(df)
   if (num_cols != 3 && num_cols != 4) {
     stop("Provided dataframe should only have three or four columns.\n")
-  }
-
-  # Set seed for randomization if one specified
-  if (!is.null(seed)) {
-    set.seed(seed)
   }
 
   # Initialize some variables
@@ -311,11 +321,6 @@ aclhs <- function(df, num_samples, weights, iter = 1000,
     out_df <- df[aclhs_samples,]
     colnames(out_df) <- prev_colnames
     utils::write.csv(out_df, export_file, row.names = FALSE)
-  }
-
-  # Remove randomized seed
-  if (!is.null(seed)) {
-    rm(.Random.seed, envir=globalenv())
   }
 
   # Return the indices

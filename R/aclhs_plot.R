@@ -47,6 +47,7 @@ aclhs.plot_params <- function(file_name, plot_title = "", xlab = "",
 #' @param df The original data in dataframe format
 #' @param aclhs_samples The acLHS-derived sample indices
 #' @param plot_params The plotting parameters to use
+#' @return No return value, called for side effects
 #' @examples
 #' ## Get the data of interest and get the acLHS sample indices
 #' data(ex_data_2D)
@@ -66,7 +67,6 @@ aclhs.plot_sampling_distribution <- function(df, aclhs_samples, plot_params) {
   # Create the PNG
   grDevices::png(plot_params$file_name, bg = "white", width = plot_params$width,
                  height = plot_params$height, res = plot_params$res)
-  graphics::par(mfrow = c(1, 1), mar = c(4, 6, 2, 2), cex.lab = 1.0, cex.axis = 1.0)
 
   # Do correct plotting based on dimensions of data
   df_temp <- df
@@ -79,13 +79,12 @@ aclhs.plot_sampling_distribution <- function(df, aclhs_samples, plot_params) {
     plot(df_temp$Time, df_temp$Dep, type = "p", lwd = 2, pch = 1, bty="o", col = "lightgray",
          xlim = c(min(df_temp$Time), max(df_temp$Time)), ylim = c(min(df_temp$Dep), max(df_temp$Dep)),
          xlab = "", ylab = "")
-    graphics::grid(col = "lightgray", lty = "dashed", lwd = graphics::par("lwd"), equilogs = TRUE)
 
     # Plot subsampled points
-    graphics::par(new = TRUE)
     plot(df_sub$Time, df_sub$Dep, pch = 18, cex = 1.5, bty = "o", col = "blue",
          xlim = c(min(df_temp$Time), max(df_temp$Time)), ylim = c(min(df_temp$Dep), max(df_temp$Dep)),
          xlab = plot_params$xlab, ylab = plot_params$ylab)
+    graphics::grid(col = "lightgray", lty = "dashed", lwd = 1, equilogs = TRUE)
   }
   else {
     # Update column names and subsample original data
@@ -97,7 +96,6 @@ aclhs.plot_sampling_distribution <- function(df, aclhs_samples, plot_params) {
          ylim = c(min(df_temp$Y), max(df_temp$Y)), xlab = "", ylab = "")
 
     # Plot subsampled points
-    graphics::par(new = TRUE)
     plot(df_sub$X, df_sub$Y, pch = 18, col = "blue", main = plot_params$plot_title,
          xlim = c(min(df_temp$X), max(df_temp$X)), ylim = c(min(df_temp$Y), max(df_temp$Y)),
          xlab = plot_params$xlab, ylab = plot_params$ylab)
@@ -110,7 +108,7 @@ aclhs.plot_sampling_distribution <- function(df, aclhs_samples, plot_params) {
   }
 
   graphics::box()
-  grDevices::dev.off()
+  invisible_result <- grDevices::dev.off()
 }
 
 #' Plot the univariate PDF for a column of acLHS-derived samples.
@@ -123,6 +121,7 @@ aclhs.plot_sampling_distribution <- function(df, aclhs_samples, plot_params) {
 #' @param aclhs_samples The acLHS-derived sample indices
 #' @param col The column of data to plot
 #' @param plot_params The plotting parameters to use
+#' @return No return value, called for side effects
 #' @examples
 #' ## Get the data of interest and get the acLHS sample indices
 #' data(ex_data_2D)
@@ -142,7 +141,6 @@ aclhs.plot_univariate_pdf <- function(df, aclhs_samples, col, plot_params) {
   # Create the PNG
   grDevices::png(plot_params$file_name, bg = "white", width = plot_params$width,
                  height = plot_params$height, res = plot_params$res)
-  graphics::par(mfrow = c(1, 1), mar = c(4, 6, 2, 2), cex.lab = 1.2, cex.axis = 1.2)
 
   # Subsample the data
   df_sub <- df[aclhs_samples,]
@@ -151,14 +149,13 @@ aclhs.plot_univariate_pdf <- function(df, aclhs_samples, col, plot_params) {
   plot(stats::ecdf(df[,col]), pch = 1, yaxt = "n", col = "lightgray",
        xlim = c(min(df[,col]), max(df[,col])), ylim = c(0,1),
        main = "", xlab = "", ylab = "")
-  graphics::axis(2, at = seq(0, 1, by = 0.2))
-  graphics::grid(col = "lightgray", lty = "dashed", lwd = graphics::par("lwd"), equilogs = TRUE)
 
   # Plot the subsamples points
-  graphics::par(new = TRUE)
   plot(stats::ecdf(df_sub[,col]), pch = 18, cex = 1.5, yaxt = "n", col = "blue",
        xlim = c(min(df[,col]), max(df[,col])), ylim = c(0,1), main = plot_params$plot_title,
        xlab = plot_params$xlab, ylab = plot_params$ylab)
+  graphics::axis(2, at = seq(0, 1, by = 0.2))
+  graphics::grid(col = "lightgray", lty = "dashed", lwd = 1, equilogs = TRUE)
 
   # Add legend if requested
   if (!is.null(plot_params$legend)) {
@@ -167,7 +164,7 @@ aclhs.plot_univariate_pdf <- function(df, aclhs_samples, col, plot_params) {
   }
 
   graphics::box()
-  grDevices::dev.off()
+  invisible_result <- grDevices::dev.off()
 }
 
 #' Plot the scatterplot of the acLHS subsamples.
@@ -178,6 +175,7 @@ aclhs.plot_univariate_pdf <- function(df, aclhs_samples, col, plot_params) {
 #' @param df The original data in dataframe format
 #' @param aclhs_samples The acLHS-derived sample indices
 #' @param plot_params The plotting parameters to use
+#' @return No return value, called for side effects
 #' @examples
 #' #' ## Get the data of interest and get the acLHS sample indices
 #' data(ex_data_2D)
@@ -197,7 +195,6 @@ aclhs.plot_scatterplot <- function(df, aclhs_samples, plot_params) {
   # Create the PNG
   grDevices::png(plot_params$file_name, bg = "white", width = plot_params$width,
                  height = plot_params$height, res = plot_params$res)
-  graphics::par(mfrow = c(1, 1), mar = c(4, 6, 2, 2), cex.lab = 1.2, cex.axis = 1.2)
 
   # Update the column names based on the dimensions of the data
   df_temp <- df
@@ -215,14 +212,13 @@ aclhs.plot_scatterplot <- function(df, aclhs_samples, plot_params) {
   plot(df_temp$Ind, df_temp$Dep, pch = 1, col = "lightgray",
        xlim = c(min(df_temp$Ind), max(df_temp$Ind)),
        ylim = c(min(df_temp$Dep), max(df_temp$Dep)), xlab = "", ylab = "")
-  graphics::grid(col = "lightgray", lty = "dashed", lwd = graphics::par("lwd"), equilogs = TRUE)
 
   # Plot the subsampled points
-  graphics::par(new = TRUE)
   plot(df_sub$Ind, df_sub$Dep, pch = 18, cex = 1.5, col = "blue",
        xlim = c(min(df_temp$Ind), max(df_temp$Ind)), ylim = c(min(df_temp$Dep), max(df_temp$Dep)),
        main = plot_params$plot_title, xlab = plot_params$xlab,
        ylab = plot_params$ylab)
+  graphics::grid(col = "lightgray", lty = "dashed", lwd = 1, equilogs = TRUE)
 
   # Add legend if requested
   if (!is.null(plot_params$legend)) {
@@ -231,7 +227,7 @@ aclhs.plot_scatterplot <- function(df, aclhs_samples, plot_params) {
   }
 
   graphics::box()
-  grDevices::dev.off()
+  invisible_result <- grDevices::dev.off()
 }
 
 #' Plot the Variogram comparison of the acLHS subsamples.
@@ -244,6 +240,7 @@ aclhs.plot_scatterplot <- function(df, aclhs_samples, plot_params) {
 #' @param aclhs_samples The acLHS-derived sample indices
 #' @param vario_params The parameters to set for computing a Variogram
 #' @param plot_params The plotting parameters to use
+#' @return No return value, called for side effects
 #' @examples
 #' #' ## Get the data of interest and get the acLHS sample indices
 #' data(ex_data_2D)
@@ -341,19 +338,16 @@ aclhs.plot_variogram_comparison <- function(df, aclhs_samples, vario_params, plo
   # Create the PNG
   grDevices::png(plot_params$file_name, bg = "white", width = plot_params$width,
                  height = plot_params$height, res = plot_params$res)
-  graphics::par(mfrow = c(1, 1), mar = c(4, 6, 2, 2), cex.lab = 1.2, cex.axis = 1.2)
 
   # Plot the original points
   zoom_val <- 1.2
   plot(vario_org$u, vario_org$v, pch = 1, col = "black", xlim = c(0, max(vario_org$u)),
        ylim = c(0, max(vario_org$v)*zoom_val), xlab = "", ylab = "")
-  graphics::grid(col = "lightgray", lty = "dashed", lwd = graphics::par("lwd"), equilogs = TRUE)
 
   # Plot the sampled points
-  graphics::par(new = TRUE)
   plot(vario_sub$u, vario_sub$v, pch = 18, cex = 1.5, col = "blue", xlim = c(0, max(vario_org$u)),
        ylim = c(0, max(vario_org$v)*zoom_val), xlab = plot_params$xlab, ylab = plot_params$ylab)
-  graphics::par(new = TRUE)
+  graphics::grid(col = "lightgray", lty = "dashed", lwd = 1, equilogs = TRUE)
 
   # Plot the best fit curve for original Variogram
   suppressWarnings(vario_fit <- geoR::variofit(vario_org, messages = FALSE))
@@ -366,5 +360,5 @@ aclhs.plot_variogram_comparison <- function(df, aclhs_samples, vario_params, plo
   }
 
   graphics::box()
-  grDevices::dev.off()
+  invisible_result <- grDevices::dev.off()
 }

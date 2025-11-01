@@ -13,6 +13,9 @@ aclhs.plot_sampling_distribution(df, aclhs_samples, plot_params)
 
 \item{plot_params}{The plotting parameters to use}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Plots the acLHS sample distribution for either 1D or 2D data.
 acLHS samples will be overlayed over the original data points in blue.
